@@ -51,4 +51,17 @@ exports.update_category = asyncHandler(async (req, res) => {
   }
 });
 
-// TODO ADD Delete function
+exports.delete_category = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  if (!ObjectId.isValid(id)) {
+    return res.status(400).json({ msg: "Invalid category ID" });
+  }
+  const category = await category_model.findByIdAndDelete(id);
+  if (!category) {
+    res.status(404).json({ msg: "This category is Not Found" });
+  } else {
+    res
+      .status(204)
+      .send();
+  }
+});

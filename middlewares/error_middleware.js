@@ -1,7 +1,6 @@
 const dotenv = require("dotenv");
 dotenv.config({ path: "config.env" });
 const ENV = process.env.NODE_ENV;
-
 const global_error = (err, req, res, next) => {
   err.status_code = err.status_code || 500;
   err.status = err.status || "error";

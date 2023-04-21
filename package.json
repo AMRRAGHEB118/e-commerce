@@ -1,0 +1,41 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "create an e-commerce API with Node.js and express framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon server.js",
+    "start:prod": "NODE_ENV=production node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "express-validator": "^7.0.1",
+    "helmet": "^6.1.5",
+    "mongoose": "^7.0.3",
+    "morgan": "^1.10.0",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jshint": "^2.13.6",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AMRRAGHEB118/e-commerce.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AMRRAGHEB118/e-commerce/issues"
+  },
+  "homepage": "https://github.com/AMRRAGHEB118/e-commerce#readme"
+}

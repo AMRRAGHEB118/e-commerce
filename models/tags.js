@@ -18,12 +18,11 @@ const slug_schema = new Schema({
     },
 });
 
-const type_schema = new Schema({
+/*const type_schema = new Schema({
     type: {
         type: Object,
-        required: [true, 'type required'],
     },
-});
+}); */
 
 const category_schema = new Schema({
     category: [
@@ -38,7 +37,7 @@ const category_schema = new Schema({
 const tag_schema = new Schema({});
 tag_schema.add(name_schema);
 tag_schema.add(slug_schema);
-tag_schema.add(type_schema);
+// tag_schema.add(type_schema);
 tag_schema.add(category_schema);
 tag_schema.set('timestamps', true);
 

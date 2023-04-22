@@ -1,11 +1,6 @@
 const { check } = require('express-validator');
 const validator_middleware = require('../../middlewares/validator_middleware');
 
-exports.get_category_validator = [
-	check('id').isMongoId().withMessage('Id category is Invalid'),
-	validator_middleware,
-];
-
 exports.create_category_validator = [
 	check('name')
 		.notEmpty()
@@ -14,6 +9,11 @@ exports.create_category_validator = [
 		.withMessage('Too short category name')
 		.isLength({ max: 30 })
 		.withMessage('Too long category name'),
+	validator_middleware,
+];
+
+exports.get_category_validator = [
+	check('id').isMongoId().withMessage('Id category is Invalid'),
 	validator_middleware,
 ];
 

@@ -1,6 +1,5 @@
 # e-commerce
-
-Build an ecommerce server side and RESTful APIs using Node.js, express framework and mongoDB
+Build an generic e-commerce server side and RESTful APIs using Node.js, express framework and mongoDB
 
 ## dependencies
 
@@ -16,7 +15,7 @@ Build an ecommerce server side and RESTful APIs using Node.js, express framework
     slugify: "^1.6.6"
 ```
 
-## devDependencies
+## devDependencies 
 
 ```
     eslint: "^8.38.0",

@@ -1,5 +1,5 @@
 # e-commerce
-Build an generic e commerce server side and RESTful APIs using Node.js, express framework and mongoDB
+Build an generic e-commerce server side and RESTful APIs using Node.js, express framework and mongoDB
 
 ## dependencies 
 ```

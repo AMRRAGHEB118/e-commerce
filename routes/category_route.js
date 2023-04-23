@@ -13,6 +13,10 @@ const {
 	update_category,
 	delete_category,
 } = require('../controllers/category_controllers');
+const tag_route = require('./tag_route');
+
+
+router.use("/:categoryId/tags", tag_route)
 
 router
 	.route('/')

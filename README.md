@@ -1,7 +1,8 @@
 # e-commerce
 Build an generic e-commerce server side and RESTful APIs using Node.js, express framework and mongoDB
 
-## dependencies 
+## dependencies
+
 ```
     cors: "^2.8.5",
     dotenv: "^16.0.3",
@@ -15,6 +16,7 @@ Build an generic e-commerce server side and RESTful APIs using Node.js, express 
 ```
 
 ## devDependencies 
+
 ```
     eslint: "^8.38.0",
     eslint-config-prettier: "^8.8.0",
@@ -24,14 +26,16 @@ Build an generic e-commerce server side and RESTful APIs using Node.js, express 
     prettier: "^2.8.7"
 ```
 
-## run server 
+## run server
 
 in development :
+
 ```
-nodemon server.js
+   nodemon server.js
 ```
 
 in production :
+
 ```
-NODE_ENV=production node server.js
+   NODE_ENV=production node server.js
 ```

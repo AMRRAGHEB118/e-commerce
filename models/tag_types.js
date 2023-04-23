@@ -6,8 +6,12 @@ const tag_type_schema = new Schema({
         required: true,
         unique: true,
     },
+    slug: {
+        type: String,
+        lowercase: true,
+    }
 });
 
-const tag_type = model('tag_type', tag_type_schema);
+const tag_type_model = model('tag_type', tag_type_schema);
 
-module.exports = tag_type;
+module.exports = tag_type_model;

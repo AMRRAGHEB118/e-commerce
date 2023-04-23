@@ -4,10 +4,13 @@ const asyncHandler = require('express-async-handler');
 const tags_model = require('../models/tags');
 
 exports.create_filter_object = (req, res, next) => {
-    let { categoryId } = req.params;
+    let { categoryId, typeId } = req.params;
     let filter = {};
     if (categoryId) {
         filter = { category: categoryId };
+    }
+    else if (typeId) {
+        filter = { type: typeId };
     }
     req.filter = filter
     next();
@@ -39,8 +42,8 @@ exports.get_tag = asyncHandler(async (req, res, next) => {
     }
 });
 
-exports.set_category = (req, res, next) => {
-    if (!req.body.category) req.body.category = [req.params.categoryId];
+exports.set_type_for_create_tag = (req, res, next) => {
+    if (!req.body.type) req.body.type = [req.params.typeId];
     next();
 };
 

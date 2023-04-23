@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const tag_route = require('./tag_route');
+
 const {
 	get_category_validator,
 	create_category_validator,
@@ -13,7 +15,6 @@ const {
 	update_category,
 	delete_category,
 } = require('../controllers/category_controllers');
-const tag_route = require('./tag_route');
 
 
 router.use("/:categoryId/tags", tag_route)

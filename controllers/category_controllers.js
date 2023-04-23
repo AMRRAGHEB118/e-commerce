@@ -13,7 +13,6 @@ exports.get_categories = asyncHandler(async (req, res) => {
         page,
         data: categories,
     });
-    res.send(categories);
 });
 
 exports.get_category = asyncHandler(async (req, res, next) => {

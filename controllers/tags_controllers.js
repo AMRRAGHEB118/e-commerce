@@ -45,10 +45,11 @@ exports.set_category = (req, res, next) => {
 };
 
 exports.create_tag = asyncHandler(async (req, res) => {
-    const { name, category } = req.body;
+    const { name, type, category } = req.body;
     const tag = await tags_model.create({
         name,
         slug: slugify(name),
+        type,
         category,
     });
     res.status(201).json({ data: tag });
@@ -56,11 +57,11 @@ exports.create_tag = asyncHandler(async (req, res) => {
 
 exports.update_tag = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, type } = req.body;
     // const { category } = req.body;
     const tag = await tags_model.findByIdAndUpdate(
         { _id: id },
-        { name, slug: slugify(name), category },
+        { name, slug: slugify(name), type, category },
         { new: true }
     );
     if (!tag) {

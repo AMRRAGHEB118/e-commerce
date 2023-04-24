@@ -1,5 +1,4 @@
-const slugify = require('slugify');
-const { check, body } = require('express-validator');
+const { check } = require('express-validator');
 const validator_middleware = require('../../middlewares/validator_middleware');
 
 exports.create_product_validator = [

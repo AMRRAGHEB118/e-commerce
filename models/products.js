@@ -57,7 +57,7 @@ const tags_schema = new Schema({
         {
             type: {
                 type: Schema.Types.ObjectId,
-                ref: 'tag_type',
+                ref: 'tag_types',
                 required: true,
             },
             values: [

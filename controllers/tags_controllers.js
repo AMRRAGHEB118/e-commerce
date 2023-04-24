@@ -43,7 +43,7 @@ exports.get_tag = asyncHandler(async (req, res, next) => {
 });
 
 exports.set_type_for_create_tag = (req, res, next) => {
-    if (!req.body.type) req.body.type = [req.params.typeId];
+    if (!req.body.type) req.body.type = req.params.typeId;
     next();
 };
 
@@ -60,8 +60,7 @@ exports.create_tag = asyncHandler(async (req, res) => {
 
 exports.update_tag = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const { name, type } = req.body;
-    // const { category } = req.body;
+    const { name, type, category } = req.body;
     const tag = await tags_model.findByIdAndUpdate(
         { _id: id },
         { name, slug: slugify(name), type, category },

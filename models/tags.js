@@ -20,7 +20,7 @@ const slug_schema = new Schema({
 
 const type_schema = new Schema({
     type: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'tag_type',
     },
 });

@@ -33,7 +33,7 @@ exports.create_type = asyncHandler(async (req, res) => {
 
 exports.update_type = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
-    const name = req.body.name;
+    const { name } = req.body;
     const type = await tag_type_model.findOneAndUpdate(
         { _id: id },
         { name, slug: slugify(name) },

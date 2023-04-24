@@ -1,0 +1,92 @@
+const { Schema, model } = require('mongoose');
+
+const user_name_schema = new Schema({
+    username: {
+        type: String,
+        required: [true, 'Username is required'],
+        unique: [true, 'Username must be unique'],
+        validate: {
+            validator: (username) => /^[a-z0-9_]{3,20}$/.test(username),
+            message:
+                'Username must be 3-20 characters and contain only letters, numbers and underscores.',
+        },
+    },
+});
+
+const slug_schema = new Schema({
+    slug: {
+        type: String,
+        lowercase: true,
+    },
+});
+
+const email_schema = new Schema({
+    email: {
+        type: String,
+        required: [true, 'Email is required'],
+        unique: [true, 'Email must be unique'],
+        lowercase: true,
+        validate: [validator.isEmail, 'Please provide a valid email'],
+    },
+});
+
+const password_schema = new Schema({
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        minlength: [8, 'Password must be at least 8 characters long'],
+    },
+});
+
+const phone_schema = new Schema({
+    phone_number: {
+        type: String,
+        validate: {
+            validator: function (v) {
+                return /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/.test(v);
+            },
+            message: 'Please provide a valid phone number',
+        },
+    },
+});
+
+const date_of_birth_schema = new Schema({
+    date_of_birth: {
+        type: Date,
+    },
+});
+
+const gender_schema = new Schema({
+    gender: {
+        type: String,
+        enum: ['male', 'female'],
+    },
+});
+
+const profile_image_schema = new Schema({
+    image: String,
+});
+
+const role_schema = new Schema({
+    role: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user',
+    },
+});
+
+const user_schema = new Schema({});
+user_schema.add(user_name_schema);
+user_schema.add(slug_schema);
+user_schema.add(email_schema);
+user_schema.add(password_schema);
+user_schema.add(phone_schema);
+user_schema.add(date_of_birth_schema);
+user_schema.add(gender_schema);
+user_schema.add(profile_image_schema);
+user_schema.add(role_schema);
+user_schema.set('timestamps', true);
+
+const user_model = mongoose.model('users', user_schema);
+
+module.exports = User;

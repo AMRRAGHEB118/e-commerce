@@ -7,7 +7,7 @@ const title_schema = new Schema({
         required: [true, 'Product title is required'],
         unique: [true, 'Product title must be unique'],
         minlength: [3, 'Product title is too short'],
-        maxlength: [30, 'Product title is too long'],
+        maxlength: [100, 'Product title is too long'],
     },
 });
 
@@ -22,7 +22,7 @@ const description_schema = new Schema({
     description: {
         type: String,
         required: [true, 'Product description is required'],
-        maxlength: [100, 'Product description is too long'],
+        maxlength: [2000, 'Product description is too long'],
     },
 });
 

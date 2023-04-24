@@ -4,8 +4,8 @@ const name_schema = new Schema({
     name: {
         type: String,
         trim: true,
-        required: [true, 'tag required'],
-        unique: [true, 'tag must be unique'],
+        required: [true, 'tag name required'],
+        unique: [true, 'tag name must be unique'],
         minLength: [3, 'Too short tag name'],
         maxLength: [30, 'Too long tag name'],
     },

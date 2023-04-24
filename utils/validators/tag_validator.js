@@ -9,11 +9,12 @@ exports.create_tag_validator = [
         .withMessage('Too short tag name')
         .isLength({ max: 30 })
         .withMessage('Too long tag name'),
-    check('category')
-        .isArray({ min: 1 })
-        .withMessage('category required')
+    check('type')
+        .notEmpty()
+        .withMessage('tag type required')
         .isMongoId()
-        .withMessage('Id category is Invalid'),
+        .withMessage('Id tag type is Invalid'),
+    check('category').isMongoId().withMessage('Id category is Invalid'),
     validator_middleware,
 ];
 
@@ -31,11 +32,12 @@ exports.update_tag_validator = [
         .withMessage('Too short tag name')
         .isLength({ max: 30 })
         .withMessage('Too long tag name'),
-    check('category')
-        .isArray({ min: 1 })
-        .withMessage('category required')
+    check('type')
+        .notEmpty()
+        .withMessage('tag type required')
         .isMongoId()
-        .withMessage('Id category is Invalid'),
+        .withMessage('Id tag type is Invalid'),
+    check('category').isMongoId().withMessage('Id category is Invalid'),
     validator_middleware,
 ];
 

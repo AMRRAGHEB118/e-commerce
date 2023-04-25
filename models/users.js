@@ -30,14 +30,13 @@ const password_schema = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
+        unique: [true, 'Password must be unique'],
         minlength: [8, 'Password must be at least 8 characters long'],
     },
 });
 
 const phone_schema = new Schema({
-    phone_number: {
-        type: String,
-    },
+    phone_number: String,
 });
 
 const date_of_birth_schema = new Schema({

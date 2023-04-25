@@ -1,15 +1,11 @@
 const { Schema, model } = require('mongoose');
+const validator = require('validator');
 
 const user_name_schema = new Schema({
     username: {
         type: String,
         required: [true, 'Username is required'],
         unique: [true, 'Username must be unique'],
-        validate: {
-            validator: (username) => /^[a-z0-9_]{3,20}$/.test(username),
-            message:
-                'Username must be 3-20 characters and contain only letters, numbers and underscores.',
-        },
     },
 });
 
@@ -41,18 +37,13 @@ const password_schema = new Schema({
 const phone_schema = new Schema({
     phone_number: {
         type: String,
-        validate: {
-            validator: function (v) {
-                return /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]*$/.test(v);
-            },
-            message: 'Please provide a valid phone number',
-        },
     },
 });
 
 const date_of_birth_schema = new Schema({
     date_of_birth: {
         type: Date,
+        match: /^\d{4}-\d{2}-\d{2}$/,
     },
 });
 
@@ -87,6 +78,6 @@ user_schema.add(profile_image_schema);
 user_schema.add(role_schema);
 user_schema.set('timestamps', true);
 
-const user_model = mongoose.model('users', user_schema);
+const user_model = model('users', user_schema);
 
-module.exports = User;
+module.exports = user_model;

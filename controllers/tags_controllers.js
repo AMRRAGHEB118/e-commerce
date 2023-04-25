@@ -1,7 +1,7 @@
 const apiError = require('../utils/api_errors');
 const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
-const tags_model = require('../models/tags');
+const tag_model = require('../models/tags');
 
 exports.create_filter_object = (req, res, next) => {
     let { categoryId, typeId } = req.params;
@@ -21,7 +21,7 @@ exports.get_tags = asyncHandler(async (req, res) => {
     const limit = req.query.limit * 1 || 3;
     const skip = (page - 1) * limit;
     const filter = req.filter
-    const tags = await tags_model
+    const tags = await tag_model
         .find(filter)
         .skip(skip)
         .limit(limit)
@@ -34,7 +34,7 @@ exports.get_tags = asyncHandler(async (req, res) => {
 
 exports.get_tag = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const tag = await tags_model.findById(id);
+    const tag = await tag_model.findById(id);
     if (!tag) {
         return next(new apiError(404, 'This tag is Not Found'));
     } else {
@@ -49,7 +49,7 @@ exports.set_type_for_create_tag = (req, res, next) => {
 
 exports.create_tag = asyncHandler(async (req, res) => {
     const { name, type, category } = req.body;
-    const tag = await tags_model.create({
+    const tag = await tag_model.create({
         name,
         slug: slugify(name),
         type,
@@ -61,7 +61,7 @@ exports.create_tag = asyncHandler(async (req, res) => {
 exports.update_tag = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const { name, type, category } = req.body;
-    const tag = await tags_model.findByIdAndUpdate(
+    const tag = await tag_model.findByIdAndUpdate(
         { _id: id },
         { name, slug: slugify(name), type, category },
         { new: true }
@@ -74,7 +74,7 @@ exports.update_tag = asyncHandler(async (req, res, next) => {
 
 exports.delete_tag = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const tag = await tags_model.findByIdAndDelete(id);
+    const tag = await tag_model.findByIdAndDelete(id);
     if (!tag) {
         return next(new apiError(404, 'This tag is Not Found'));
     } else {

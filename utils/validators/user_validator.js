@@ -13,7 +13,13 @@ const email_validator = check('email')
     .notEmpty()
     .withMessage('Email is required')
     .isEmail()
-    .withMessage('Please provide a valid email address');
+    .withMessage('Please provide a valid email address')
+    .custom(async (val) => {
+        const user = await user_model.findOne({ email: val });
+        if (user) {
+            return new Error('This Email is already exists');
+        }
+    });;
 
 const password_validator = check('password')
     .notEmpty()

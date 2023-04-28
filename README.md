@@ -12,6 +12,7 @@ Build an generic e-commerce server side and RESTful APIs using Node.js, express 
     "express-async-handler": "^1.2.0",
     "express-validator": "^7.0.1",
     "helmet": "^6.1.5",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
     "slugify": "^1.6.6",

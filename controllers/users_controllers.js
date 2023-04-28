@@ -59,10 +59,11 @@ exports.update_user = asyncHandler(async (req, res, next) => {
 });
 
 exports.change_user_password = asyncHandler(async (req, res, next) => {
+    const salt = await bcrypt.genSalt(12);
     const user = await user_model.findByIdAndUpdate(
         req.params.id,
         {
-            password: await bcrypt.hash(req.body.password, 12),
+            password: await bcrypt.hash(req.body.password, salt),
         },
         {
             new: true,

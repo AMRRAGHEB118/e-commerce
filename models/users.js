@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const user_name_schema = new Schema({
     username: {
@@ -76,6 +77,13 @@ user_schema.add(gender_schema);
 user_schema.add(profile_image_schema);
 user_schema.add(role_schema);
 user_schema.set('timestamps', true);
+
+user_schema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
+    this.password = await bcrypt.hash(this.password, 12);
+    console.log('amr');
+    next();
+});
 
 const user_model = model('users', user_schema);
 

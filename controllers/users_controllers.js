@@ -2,19 +2,7 @@ const apiError = require('../utils/api_errors');
 const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
 const user_model = require('../models/users');
-
-// exports.create_filter_object = (req, res, next) => {
-//     let { categoryId, typeId } = req.params;
-//     let filter = {};
-//     if (categoryId) {
-//         filter = { category: categoryId };
-//     }
-//     else if (typeId) {
-//         filter = { type: typeId };
-//     }
-//     req.filter = filter
-//     next();
-// };
+const bcrypt = require('bcryptjs');
 
 exports.get_users = asyncHandler(async (req, res) => {
     const page = req.query.page * 1 || 1;
@@ -48,9 +36,38 @@ exports.create_user = asyncHandler(async (req, res) => {
 exports.update_user = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     req.body.slug = slugify(req.body.username);
-    const user = await user_model.findByIdAndUpdate({ _id: id }, req.body, {
-        new: true,
-    });
+    const user = await user_model.findByIdAndUpdate(
+        { _id: id },
+        {
+            username: req.body.username,
+            slug: req.body.slug,
+            email: req.body.email,
+            phone_number: req.body.phone_number,
+            date_of_birth: req.body.date_of_birth,
+            gender: req.body.gender,
+            image: req.body.image,
+            role: req.body.role,
+        },
+        {
+            new: true,
+        }
+    );
+    if (!user) {
+        return next(new apiError(404, 'This user is Not Found'));
+    }
+    res.status(200).json({ data: user });
+});
+
+exports.change_user_password = asyncHandler(async (req, res, next) => {
+    const user = await user_model.findByIdAndUpdate(
+        req.params.id,
+        {
+            password: await bcrypt.hash(req.body.password, 12),
+        },
+        {
+            new: true,
+        }
+    );
     if (!user) {
         return next(new apiError(404, 'This user is Not Found'));
     }

@@ -6,7 +6,6 @@ const user_name_schema = new Schema({
     username: {
         type: String,
         required: [true, 'Username is required'],
-        unique: [true, 'Username must be unique'],
     },
 });
 
@@ -81,7 +80,6 @@ user_schema.set('timestamps', true);
 user_schema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
     this.password = await bcrypt.hash(this.password, 12);
-    console.log('amr');
     next();
 });
 

@@ -3,6 +3,7 @@ const validator_middleware = require('../../middlewares/validator_middleware');
 const category_model = require('../../models/categories');
 const tag_model = require('../../models/tags');
 const tag_type_model = require('../../models/tag_types');
+const { Types } = require('mongoose');
 
 const title_validator = check('title')
     .notEmpty()
@@ -25,7 +26,7 @@ const quantity_validator = check('quantity')
     .isInt({ min: 0 })
     .withMessage('Quantity cannot be negative');
 
-const sold_validator = check('sold')
+const sold_validator = check('sold').optional()
     .isNumeric()
     .withMessage('Sold must be a number')
     .isInt({ min: 0 })
@@ -77,27 +78,27 @@ const type_validator = check('tags.*.type')
         return Promise.resolve();
     });
 
-const tag_validator = check('tags.*.values')
+const tag_validator = check('tags.*.tags')
     .optional()
     .isArray()
     .withMessage('Tag values must be an array')
-    .custom((values, { req }) => {
-        const tag_ids = values.filter((value) => Types.ObjectId.isValid(value));
-        if (tag_ids.length !== values.length) {
+    .custom((tags, { req }) => {
+        const tag_ids = tags.filter((value) => Types.ObjectId.isValid(value));
+        if (tag_ids.length !== tags.length) {
             return Promise.reject('Invalid tag ID');
         }
         return Promise.resolve();
     })
-    .custom(async (values) => {
-        const tag_promises = values.map(async (tag_id) => {
+    .custom(async (tags, {req}) => {
+        const tag_promises = tags.map(async (tag_id) => {
             const tag = await tag_model.findById(tag_id);
             if (!tag) {
                 return Promise.reject(new Error(`No tag for this Id : ${tag}`));
             }
-            if (tag.type !== req.tag_type.value) {
+            if (tag.type.toString() !== req.tag_type._id.toString()) {
                 return Promise.reject(
                     new Error(
-                        `Tag type must be equal to '${req.tag_type.value}'`
+                        `Tag type must be equal to '${req.tag_type._id}'`
                     )
                 );
             }

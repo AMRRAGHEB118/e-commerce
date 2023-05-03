@@ -17,9 +17,17 @@ const slug_schema = new Schema({
     },
 });
 
+const description_schema = new Schema({
+    description: {
+        type: String,
+        maxLength: [100, 'Too long description']
+      }
+});
+
 const tag_type_schema = new Schema({});
 tag_type_schema.add(name_schema);
 tag_type_schema.add(slug_schema);
+tag_type_schema.add(description_schema);
 tag_type_schema.set('timestamps', true);
 
 const tag_type_model = model('tag_type', tag_type_schema);

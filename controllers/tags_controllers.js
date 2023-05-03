@@ -4,13 +4,13 @@ const asyncHandler = require('express-async-handler');
 const tag_model = require('../models/tags');
 
 exports.create_filter_object = (req, res, next) => {
-    let { categoryId, typeId } = req.params;
+    let { category_id, type_id } = req.params;
     let filter = {};
-    if (categoryId) {
-        filter = { category: categoryId };
+    if (category_id) {
+        filter = { category: category_id };
     }
-    else if (typeId) {
-        filter = { type: typeId };
+    else if (type_id) {
+        filter = { type: type_id };
     }
     req.filter = filter
     next();
@@ -24,7 +24,7 @@ exports.get_tags = asyncHandler(async (req, res) => {
     const tags = await tag_model
         .find(filter)
         .skip(skip)
-        .limit(limit)
+        .limit(limit).populate('category', 'name')
     res.status(200).json({
         results: tags.length,
         page: page,
@@ -48,22 +48,17 @@ exports.set_type_for_create_tag = (req, res, next) => {
 };
 
 exports.create_tag = asyncHandler(async (req, res) => {
-    const { name, type, category } = req.body;
-    const tag = await tag_model.create({
-        name,
-        slug: slugify(name),
-        type,
-        category,
-    });
+    req.body.slug = slugify(req.body.name)
+    const tag = await tag_model.create(req.body);
     res.status(201).json({ data: tag });
 });
 
 exports.update_tag = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    const { name, type, category } = req.body;
+    req.body.slug = slugify(req.body.name)
     const tag = await tag_model.findByIdAndUpdate(
         { _id: id },
-        { name, slug: slugify(name), type, category },
+        req.body,
         { new: true }
     );
     if (!tag) {

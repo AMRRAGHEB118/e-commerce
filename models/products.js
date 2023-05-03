@@ -53,18 +53,18 @@ const category_schema = new Schema({
 });
 
 const tags_schema = new Schema({
-    tags: [
+    tags_list: [
         {
             type: {
                 type: Schema.Types.ObjectId,
                 ref: 'tag_types',
-                required: true,
+                required: [true, 'Tag Type is required'],
             },
-            values: [
+            tags : [
                 {
                     type: Schema.Types.ObjectId,
                     ref: 'tags',
-                    required: true,
+                    required: [true, 'Tag is required'],
                 },
             ],
         },

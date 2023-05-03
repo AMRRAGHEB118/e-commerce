@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const tag_route = require('./tag_route');
+const product_route = require('./product_route')
 
 const {
 	get_category_validator,
@@ -17,7 +18,8 @@ const {
 } = require('../controllers/category_controllers');
 
 
-router.use("/:categoryId/tags", tag_route)
+router.use("/:category_id/tags", tag_route)
+router.use("/:category_id/products", product_route)
 
 router
 	.route('/')

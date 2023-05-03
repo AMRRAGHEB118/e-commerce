@@ -35,6 +35,9 @@ app.use('/api/v1/tag_types', tag_type_route);
 app.use('/api/v1/products', product_route);
 app.use('/api/v1/users', user_route);
 app.use('/api/v1/auth', auth_route);
+app.get('/', (req, res) => {
+    res.send("<h1>Welcome</h1>")
+})
 app.all('*', (req, res, next) => {
     next(new apiError(400, `Can't find this route ${req.originalUrl}`));
 });

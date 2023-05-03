@@ -3,11 +3,26 @@ const slugify = require('slugify');
 const asyncHandler = require('express-async-handler');
 const product_model = require('../models/products');
 
+exports.create_filter_object = (req, res, next) => {
+    let { category_id, type_id } = req.params;
+    let filter = {};
+    if (category_id) {
+        filter = { category: category_id };
+    }
+    else if (type_id) {
+        filter = { type: type_id };
+    }
+    req.body.filter = filter
+    next();
+};
+
 exports.get_products = asyncHandler(async (req, res) => {
     const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 3;
+    const limit = req.query.limit * 1 || 20;
     const skip = (page - 1) * limit;
-    const products = await product_model.find({}).skip(skip).limit(limit);
+    const filter = req.body.filter
+    console.log(filter);
+    const products = await product_model.find(filter).skip(skip).limit(limit);
     res.status(200).json({
         results: products.length,
         page,
@@ -26,8 +41,9 @@ exports.get_product = asyncHandler(async (req, res, next) => {
 });
 
 exports.create_product = asyncHandler(async (req, res) => {
+    console.log(req.body);
     req.body.slug = slugify(req.body.title);
-    const product = await product_model.create(body);
+    const product = await product_model.create(req.body);
     res.status(201).json({ data: product });
 });
 

@@ -26,17 +26,17 @@ exports.get_type = asyncHandler(async (req, res, next) => {
 });
 
 exports.create_type = asyncHandler(async (req, res) => {
-    const name = req.body.name;
-    const type = await tag_type_model.create({ name, slug: slugify(name) });
+    req.body.slug =  slugify(req.body.name) 
+    const type = await tag_type_model.create(req.body);
     res.status(201).json({ data: type });
 });
 
 exports.update_type = asyncHandler(async (req, res, next) => {
     const id = req.params.id;
-    const { name } = req.body;
+    req.body.slug =  slugify(req.body.name) 
     const type = await tag_type_model.findOneAndUpdate(
         { _id: id },
-        { name, slug: slugify(name) },
+        req.body,
         { new: true }
     );
     if (!type) {

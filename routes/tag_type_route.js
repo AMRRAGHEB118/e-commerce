@@ -24,7 +24,7 @@ router
     .put(update_type_validator, update_type)
     .delete(delete_type_validator, delete_type);
 
-router.use('/:typeId/tags', tag_route);
+router.use('/:type_id/tags', tag_route);
 
 module.exports = router;
 

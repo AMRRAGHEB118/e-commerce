@@ -21,6 +21,7 @@ const slug_schema = new Schema({
 const type_schema = new Schema({
     type: {
         type: Schema.Types.ObjectId,
+        required: [true, 'Type required'],
         ref: 'tag_type',
     },
 });

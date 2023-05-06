@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const name_schema = new Schema({
     name: {
@@ -8,28 +8,28 @@ const name_schema = new Schema({
         minLength: [3, 'Too short type name'],
         maxLength: [30, 'Too long type name'],
     },
-});
+})
 
 const slug_schema = new Schema({
     slug: {
         type: String,
         lowercase: true,
     },
-});
+})
 
 const description_schema = new Schema({
     description: {
         type: String,
-        maxLength: [100, 'Too long description']
-      }
-});
+        maxLength: [100, 'Too long description'],
+    },
+})
 
-const tag_type_schema = new Schema({});
-tag_type_schema.add(name_schema);
-tag_type_schema.add(slug_schema);
-tag_type_schema.add(description_schema);
-tag_type_schema.set('timestamps', true);
+const tag_type_schema = new Schema({})
+tag_type_schema.add(name_schema)
+tag_type_schema.add(slug_schema)
+tag_type_schema.add(description_schema)
+tag_type_schema.set('timestamps', true)
 
-const tag_type_model = model('tag_type', tag_type_schema);
+const tag_type_model = model('tag_type', tag_type_schema)
 
-module.exports = tag_type_model;
+module.exports = tag_type_model

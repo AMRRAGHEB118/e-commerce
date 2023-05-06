@@ -1,5 +1,5 @@
-const { check } = require('express-validator');
-const validator_middleware = require('../../middlewares/validator_middleware');
+const { check } = require('express-validator')
+const validator_middleware = require('../../middlewares/validator_middleware')
 
 exports.create_tag_validator = [
     check('name')
@@ -16,12 +16,12 @@ exports.create_tag_validator = [
         .withMessage('Id tag type is Invalid'),
     check('category').isMongoId().withMessage('Id category is Invalid'),
     validator_middleware,
-];
+]
 
 exports.get_tag_validator = [
     check('id').isMongoId().withMessage('Id tag is Invalid'),
     validator_middleware,
-];
+]
 
 exports.update_tag_validator = [
     check('id').isMongoId().withMessage('Id tag is Invalid'),
@@ -39,9 +39,9 @@ exports.update_tag_validator = [
         .withMessage('Id tag type is Invalid'),
     check('category').isMongoId().withMessage('Id category is Invalid'),
     validator_middleware,
-];
+]
 
 exports.delete_tag_validator = [
     check('id').isMongoId().withMessage('Id tag is Invalid'),
     validator_middleware,
-];
+]

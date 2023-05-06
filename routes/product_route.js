@@ -1,12 +1,12 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router({ mergeParams: true })
 
 const {
     create_product_validator,
     get_product_validator,
     update_product_validator,
     delete_product_validator,
-} = require('../utils/validators/product_validator');
+} = require('../utils/validators/product_validator')
 
 const {
     get_products,
@@ -14,16 +14,17 @@ const {
     create_product,
     update_product,
     delete_product,
-} = require('../controllers/product_controllers');
+    create_filter_object,
+} = require('../controllers/product_controllers')
 
 router
     .route('/')
-    .get(get_products)
-    .post(create_product_validator, create_product);
+    .get(create_filter_object, get_products)
+    .post(create_product_validator, create_product)
 router
     .route('/:id')
     .get(get_product_validator, get_product)
     .put(update_product_validator, update_product)
-    .delete(delete_product_validator, delete_product);
+    .delete(delete_product_validator, delete_product)
 
-module.exports = router;
+module.exports = router

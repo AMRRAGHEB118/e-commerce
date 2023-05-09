@@ -5,9 +5,9 @@ const cart_schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users',
         required: [true, 'User is required'],
-        unique: [true, 'User must be unique'],
+        index: { unique: true, dropDups: true }
     },
-    items: [
+    products: [
         {
             product: {
                 type: Schema.Types.ObjectId,

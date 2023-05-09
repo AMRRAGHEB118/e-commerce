@@ -21,3 +21,10 @@ exports.get_cart = asyncHandler(async (req, res, next) => {
         data: cart,
     })
 })
+
+exports.delete_cart = asyncHandler(async (user_id, next) => {
+    const cart = await cart_model.findOneAndDelete({ user: user_id })
+    if (!cart) {
+        return next(new ApiError(404, 'Cart not found'))
+    }
+})

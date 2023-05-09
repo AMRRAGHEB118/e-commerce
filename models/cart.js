@@ -3,8 +3,9 @@ const { Schema, model } = require('mongoose')
 const cart_schema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
-        required: true,
         ref: 'users',
+        required: [true, 'User is required'],
+        unique: [true, 'User must be unique'],
     },
     items: [
         {

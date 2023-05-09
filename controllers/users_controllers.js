@@ -3,7 +3,7 @@ const slugify = require('slugify')
 const asyncHandler = require('express-async-handler')
 const user_model = require('../models/users')
 const bcrypt = require('bcryptjs')
-const { create_cart } = require('../controllers/cart_controllers')
+const { create_cart, delete_cart } = require('../controllers/cart_controllers')
 
 exports.get_users = asyncHandler(async (req, res) => {
     const page = req.query.page * 1 || 1
@@ -88,6 +88,9 @@ exports.delete_user = asyncHandler(async (req, res, next) => {
     if (!user) {
         return next(new ApiError(404, 'This user is Not Found'))
     } else {
+        if(user.role === 'user'){
+            const cart = await delete_cart(id)
+        }
         res.status(204).send()
     }
 })

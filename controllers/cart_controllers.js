@@ -7,6 +7,17 @@ exports.create_cart = asyncHandler(async (user_id) => {
         user: user_id,
         items: [],
         total_price: 0,
-      });
-      return cart;
+    })
+    return cart
+})
+
+exports.get_cart = asyncHandler(async (req, res, next) => {
+    const cart = await cart_model.findOne({ user: req.user._id })
+    if (!cart) {
+        return next(new ApiError(404, 'Cart not found'))
+    }
+
+    res.status(200).json({
+        data: cart,
+    })
 })

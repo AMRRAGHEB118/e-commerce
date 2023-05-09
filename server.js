@@ -13,6 +13,7 @@ const tag_type_route = require('./routes/tag_type_route')
 const product_route = require('./routes/product_route')
 const user_route = require('./routes/user_route')
 const auth_route = require('./routes/auth_route')
+const cart_route = require('./routes/cart_route')
 
 dotenv.config({ path: 'config.env' })
 const ENV = process.env.NODE_ENV
@@ -35,6 +36,7 @@ app.use('/api/v1/tag_types', tag_type_route)
 app.use('/api/v1/products', product_route)
 app.use('/api/v1/users', user_route)
 app.use('/api/v1/auth', auth_route)
+app.use('/api/v1/cart', cart_route)
 app.get('/', (req, res) => {
     res.send('<h1>Welcome</h1>')
 })

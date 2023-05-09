@@ -2,7 +2,6 @@ const ApiError = require('../utils/api_errors')
 const asyncHandler = require('express-async-handler')
 const order_model = require('../models/order')
 const cart_model = require('../models/cart')
-const product_model = require('../models/products')
 
 exports.create_order = asyncHandler(async (req, res, next) => {
     const cart = await cart_model
@@ -45,4 +44,26 @@ exports.get_orders = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         data: orders,
     })
+})
+
+exports.get_order = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    const order = await order_model.findById(id).populate('products.product');
+  
+    if (!order || order.user.toString() !== req.user._id.toString()) {
+      return next(new ApiError(404, 'Order not found'));
+    }
+  
+    res.status(200).json({ data: order });
+  });
+
+exports.delete_order = asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+    const order = await order_model.findByIdAndDelete(id)
+
+    if (!order || order.user.toString() !== req.user._id.toString()) {
+        return next(new ApiError(404, 'Order not found'))
+    }
+
+    res.status(204).send()
 })

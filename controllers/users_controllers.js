@@ -3,12 +3,13 @@ const slugify = require('slugify')
 const asyncHandler = require('express-async-handler')
 const user_model = require('../models/users')
 const bcrypt = require('bcryptjs')
+const { create_cart } = require('../controllers/cart_controllers')
 
 exports.get_users = asyncHandler(async (req, res) => {
     const page = req.query.page * 1 || 1
     const limit = req.query.limit * 1 || 3
     const skip = (page - 1) * limit
-    // const filter = req.filter
+
     const users = await user_model.find({}).skip(skip).limit(limit)
     res.status(200).json({
         results: users.length,
@@ -30,7 +31,13 @@ exports.get_user = asyncHandler(async (req, res, next) => {
 exports.create_user = asyncHandler(async (req, res) => {
     req.body.slug = slugify(req.body.username)
     const user = await user_model.create(req.body)
-    res.status(201).json({ data: user })
+
+    let cart
+    if (user.role === 'user') {
+        cart = await create_cart(user._id)
+    }
+
+    res.status(201).json({ data: user, cart })
 })
 
 exports.update_user = asyncHandler(async (req, res, next) => {

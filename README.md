@@ -22,12 +22,12 @@ Build an generic e-commerce server side and RESTful APIs using Node.js, express 
 ## devDependencies
 
 ```
-    eslint: "^8.38.0",
-    eslint-config-prettier: "^8.8.0",
-    eslint-plugin-prettier: "^4.2.1",
-    jshint: "^2.13.6",
-    nodemon: "^2.0.22",
-    prettier: "^2.8.7"
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jshint": "^2.13.6",
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.7"
 ```
 
 ## run server
@@ -35,11 +35,11 @@ Build an generic e-commerce server side and RESTful APIs using Node.js, express 
 in development :
 
 ```
-   nodemon server.js
+nodemon server.js
 ```
 
 in production :
 
 ```
-   NODE_ENV=production node server.js
+NODE_ENV=production node server.js
 ```

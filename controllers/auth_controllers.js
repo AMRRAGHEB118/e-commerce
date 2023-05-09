@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const user_model = require('../models/users')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const { create_cart } = require('../controllers/cart_controllers')
 
 const generate_token = (payload) => {
     return jwt.sign({ user_id: payload }, process.env.JWT_SECRET_KEY, {
@@ -19,11 +20,14 @@ exports.sign_up = asyncHandler(async (req, res) => {
 
     const token = generate_token(user._id)
 
+    const cart = await create_cart(user._id)
+
     res.status(201).json({
         success: true,
         data: {
             user,
             token,
+            cart,
         },
         message: 'User successfully created.',
     })

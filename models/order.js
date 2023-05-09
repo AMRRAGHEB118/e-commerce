@@ -12,7 +12,7 @@ const product_schema = new Schema({
     products: [
         {
             product: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: Schema.Types.ObjectId,
                 ref: 'products',
                 required: true,
             },

@@ -47,15 +47,15 @@ exports.get_orders = asyncHandler(async (req, res, next) => {
 })
 
 exports.get_order = asyncHandler(async (req, res, next) => {
-    const { id } = req.params;
-    const order = await order_model.findById(id).populate('products.product');
-  
+    const { id } = req.params
+    const order = await order_model.findById(id).populate('products.product')
+
     if (!order || order.user.toString() !== req.user._id.toString()) {
-      return next(new ApiError(404, 'Order not found'));
+        return next(new ApiError(404, 'Order not found'))
     }
-  
-    res.status(200).json({ data: order });
-  });
+
+    res.status(200).json({ data: order })
+})
 
 exports.delete_order = asyncHandler(async (req, res, next) => {
     const { id } = req.params
@@ -66,4 +66,17 @@ exports.delete_order = asyncHandler(async (req, res, next) => {
     }
 
     res.status(204).send()
+})
+
+exports.update_order = asyncHandler(async (req, res, next) => {
+    const { id } = req.params
+    const order = await order_model.findByIdAndUpdate({ _id: id }, req.body, {
+        new: true,
+    })
+
+    if (!order || order.user.toString() !== req.user._id.toString()) {
+        return next(new ApiError(404, 'Order not found'))
+    }
+
+    res.status(200).json({ data: order })
 })

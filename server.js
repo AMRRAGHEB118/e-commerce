@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const helmet = require('helmet')
 const cors = require('cors')
 const morgan = require('morgan')
+const session = require('express-session')
 const db_connection = require('./config/database')
 const ApiError = require('./utils/api_errors')
 const global_error = require('./middlewares/error_middleware')
@@ -27,6 +28,14 @@ db_connection()
 app.use(cors())
 app.use(helmet())
 app.use(express.json())
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24
+    }
+}))
 if (ENV === 'development') {
     app.use(morgan('dev'))
 }

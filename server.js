@@ -40,6 +40,18 @@ if (ENV === 'development') {
     app.use(morgan('dev'))
 }
 
+app.use((req, res, next) => {
+    if (!req.session.user) {
+        req.session.user = {
+            user_id: 'guest',
+            username: 'Guest',
+            email: 'guest',
+            role: 'guest',
+        }
+        }
+    next()
+})
+
 app.use('/api/v1/categories', category_route)
 app.use('/api/v1/tags', tag_route)
 app.use('/api/v1/tag_types', tag_type_route)

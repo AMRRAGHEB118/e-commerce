@@ -21,6 +21,13 @@ exports.sign_up = asyncHandler(async (req, res) => {
 
     const token = generate_token(user._id)
 
+    req.session.user = {
+        user_id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+    }
+
     const cart = await create_cart(user._id)
 
     res.status(201).json({
@@ -52,6 +59,13 @@ exports.login = asyncHandler(async (req, res, next) => {
 
     const token = generate_token(user._id)
 
+    req.session.user = {
+        user_id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+    }
+
     res.status(201).json({
         success: true,
         data: {
@@ -65,6 +79,13 @@ exports.login = asyncHandler(async (req, res, next) => {
 exports.log_out = asyncHandler(async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     await add_to_black_list(token);
+
+    req.session.user = {
+        user_id: 'guest',
+        username: 'Guest',
+        email: 'guest',
+        role: 'guest',
+    }
     res.status(200).json({ success: true, message: 'Logged out successfully.' });
 });
 

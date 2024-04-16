@@ -4,6 +4,7 @@ const user_model = require('../models/users')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const { create_cart } = require('../controllers/cart_controllers')
+const { black_list, add_to_black_list } = require('./blacklist_contrllers')
 
 const generate_token = (payload) => {
     return jwt.sign({ user_id: payload }, process.env.JWT_SECRET_KEY, {
@@ -61,6 +62,12 @@ exports.login = asyncHandler(async (req, res, next) => {
     })
 })
 
+exports.log_out = asyncHandler(async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    await add_to_black_list(token);
+    res.status(200).json({ success: true, message: 'Logged out successfully.' });
+});
+
 exports.auth = asyncHandler(async (req, res, next) => {
     let token
     const auth_header = req.headers.authorization
@@ -70,15 +77,17 @@ exports.auth = asyncHandler(async (req, res, next) => {
     if (!token) {
         return next(new ApiError(401, 'Missing authentication token.'))
     }
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-        const user = await user_model.findById(decoded.user_id)
-        if (!user) {
-            return next(new ApiError(401, 'Invalid authentication token.'))
-        }
-        req.user = user
-        next()
-    } catch (err) {
+    if (black_list.has(token)) {
+        return next(new ApiError(401, 'Token has been blacklisted.'))
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+    const user = await user_model.findById(decoded.user_id)
+    if (!user) {
         return next(new ApiError(401, 'Invalid authentication token.'))
     }
-})
+    req.user = user
+    next()
+});
+
+

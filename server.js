@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+
 const dotenv = require('dotenv')
 const helmet = require('helmet')
 const cors = require('cors')
@@ -7,6 +8,7 @@ const morgan = require('morgan')
 const db_connection = require('./config/database')
 const ApiError = require('./utils/api_errors')
 const global_error = require('./middlewares/error_middleware')
+
 const category_route = require('./routes/category_route')
 const tag_route = require('./routes/tag_route')
 const tag_type_route = require('./routes/tag_type_route')
@@ -19,10 +21,9 @@ const order_route = require('./routes/order_route')
 dotenv.config({ path: 'config.env' })
 const ENV = process.env.NODE_ENV
 
-// connection with db
 db_connection()
 
-//   Middlewares
+
 app.use(cors())
 app.use(helmet())
 app.use(express.json())
@@ -30,7 +31,6 @@ if (ENV === 'development') {
     app.use(morgan('dev'))
 }
 
-// mount Routes
 app.use('/api/v1/categories', category_route)
 app.use('/api/v1/tags', tag_route)
 app.use('/api/v1/tag_types', tag_type_route)

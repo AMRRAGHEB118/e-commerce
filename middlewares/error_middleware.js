@@ -4,7 +4,7 @@ dotenv.config({ path: 'config.env' })
 const ENV = process.env.NODE_ENV
 const ApiError = require('../utils/api_errors')
 
-const send_error_for_dev = (err, res) => {
+const send_error_for_dev = (err, req, res) => {
     return res.status(err.status_code).json({
         status: err.status_code,
         error: err,

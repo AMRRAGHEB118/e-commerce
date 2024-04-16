@@ -29,6 +29,6 @@ router
 router
     .route('/:id')
     .get(get_category_validator, get_category)
-    .put(update_category_validator, update_category)
-    .delete(delete_category_validator, delete_category)
+    .put(update_category_validator, auth, update_category)
+    .delete(delete_category_validator, auth, delete_category)
 module.exports = router

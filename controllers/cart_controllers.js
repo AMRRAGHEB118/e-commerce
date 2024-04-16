@@ -100,8 +100,8 @@ exports.remove_product_from_cart = asyncHandler(async (req, res, next) => {
         return next(new ApiError(404, 'Product not found'))
     }
 
-    const product_index = cart.products.findIndex((item) =>
-        item.product.equals(product_id)
+    const product_index = cart.products.findIndex((index) =>
+    index.product.equals(product_id)
     )
 
     if (product_index === -1) {
@@ -117,5 +117,5 @@ exports.remove_product_from_cart = asyncHandler(async (req, res, next) => {
         cart.total_price -= product.price
     }
 
-    res.status(204).send()
+    res.status(204).json({ cart })
 })

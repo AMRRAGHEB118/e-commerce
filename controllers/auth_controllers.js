@@ -80,6 +80,7 @@ exports.log_out = asyncHandler(async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     await add_to_black_list(token);
 
+    req.session.destroy();
     req.session.user = {
         user_id: 'guest',
         username: 'Guest',
